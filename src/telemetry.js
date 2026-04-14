@@ -17,7 +17,11 @@ export default class Telemetry {
   constructor (telemetryHeader, diskSubHeader, sessionInfo, varHeaders, fd) {
     this.headers = telemetryHeader
     this.diskHeaders = diskSubHeader
+    try {
     this.sessionInfo = yaml.safeLoad(sessionInfo)
+    } catch (error) {
+        this.sessionInfo = null
+        }
 
     fileDescriptor.set(this, fd)
     variableHeaders.set(this, varHeaders)
